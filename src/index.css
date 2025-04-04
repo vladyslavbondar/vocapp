@@ -1,0 +1,137 @@
+@import "tailwindcss";
+/* @tailwind base; */
+/* @tailwind components; */
+@tailwind utilities;
+@plugin "daisyui";
+
+@font-face {
+	font-family: "Helvetica Roman";
+	src: url("./assets/fonts/helvetica/Helvetica_Roman.ttf") format("truetype");
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+
+:root {
+	font-family: "Helvetica Roman", system-ui, Avenir, Helvetica, Arial,
+		sans-serif;
+	/* line-height: 1.5;
+	font-weight: 400;
+
+	color-scheme: light dark;
+	color: rgba(255, 255, 255, 0.87);
+	background-color: #242424;
+
+	font-synthesis: none;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale; */
+}
+
+/* 
+	https://codepen.io/alphardex/pen/RwrVoeL
+	https://codepen.io/alphardex/pen/jOWMGON
+	https://animated-gradient-background-generator.netlify.app/
+*/
+.gradient-background {
+	background: linear-gradient(168deg, deepskyblue, darkviolet, blue);
+	background-size: 180% 180%;
+	animation: gradient-animation 36s ease infinite;
+}
+
+.gradient-background-ferrari {
+	background: linear-gradient(149deg, deepskyblue, #e31414, #ffea00);
+	background-size: 180% 180%;
+	animation: gradient-animation 36s ease infinite;
+}
+
+.gradient-background-red-bull {
+	background: linear-gradient(149deg, #c5c5e7, #e8002d, #3671c6);
+	background-size: 180% 180%;
+	animation: gradient-animation 36s ease infinite;
+}
+
+.gradient-background-smokers {
+	background: linear-gradient(
+		95deg,
+		#4fe429,
+		#97b6b7,
+		#356285,
+		#2ea762,
+		#dcbaf8,
+		#f6bf89
+	);
+	background-size: 360% 360%;
+	animation: gradient-animation 36s ease infinite;
+}
+
+.gradient-background-alpine {
+	background: linear-gradient(
+		228deg,
+		#9e1d8e,
+		#97c197,
+		#657ce0,
+		#902b74,
+		#77aae2,
+		#fc50c7
+	);
+	background-size: 360% 360%;
+	animation: gradient-animation 36s ease infinite;
+}
+
+.gradient-background-lighter-ice-cream {
+	background: linear-gradient(
+		239deg,
+		#69aa85,
+		#e38447,
+		#9a295b,
+		#fb4598,
+		#144ec8
+	);
+	background-size: 300% 300%;
+	animation: gradient-animation 36s ease infinite;
+}
+
+.gradient-background-strange {
+	background: linear-gradient(
+		253deg,
+		#cbbaf7,
+		#df8ac8,
+		#eac27b,
+		#7886a6,
+		#166600
+	);
+	background-size: 360% 360%;
+	animation: gradient-animation 36s ease infinite;
+}
+
+.gradient-background-ukraine {
+	background: linear-gradient(98deg, #241293, #899e21);
+	background-size: 120% 120%;
+	animation: gradient-animation 36s ease infinite;
+}
+
+.gradient-background-dinozaur {
+	background: linear-gradient(
+		90deg,
+		#6edcaa,
+		#6d7a94,
+		#558462,
+		#6c5a7c,
+		#7c6396
+	);
+	background-size: 300% 300%;
+	animation: gradient-animation 36s ease infinite;
+}
+
+@keyframes gradient-animation {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
