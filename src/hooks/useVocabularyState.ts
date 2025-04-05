@@ -23,7 +23,9 @@ export function useVocabularyState<T extends VocabularyWord>(
 
 	const previous = useCallback(() => {
 		setWordIndex((prevLearningWordIndex) =>
-			prevLearningWordIndex - 1 === 0 ? 0 : prevLearningWordIndex - 1
+			prevLearningWordIndex - 1 < 0
+				? prevLearningWordIndex
+				: prevLearningWordIndex - 1
 		);
 	}, []);
 
@@ -35,7 +37,7 @@ export function useVocabularyState<T extends VocabularyWord>(
 		);
 	}, []);
 
-	const updateWords = useCallback((newWords: T[]) => {
+	const resetVocabualryState = useCallback((newWords: T[]) => {
 		setWords(shufleArray(newWords));
 		setWordIndex(0);
 		setHaveAllUpdate(false);
@@ -63,7 +65,7 @@ export function useVocabularyState<T extends VocabularyWord>(
 		next,
 		previous,
 		updateWord,
-		updateWords,
+		resetVocabualryState,
 		isLastElement,
 		haveAllUpdated,
 	};
