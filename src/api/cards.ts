@@ -1,27 +1,25 @@
 import { useQuery } from "@tanstack/react-query";
+import { CardInfo } from "../types";
 
-import { wordStore } from "./mockData";
-import { getRandomNumberInRange } from "../utils";
-import { Card } from "../types";
+const CARDS_API_PATH = "/cards";
 
-export const getCards = async (): Promise<Card[]> => {
-	return new Promise((resolve) => {
-		setTimeout(() => {
-			const cards = wordStore.map((card) => ({
-				id: card.id,
-				name: card.name,
-				dateCreated: card.dateCreated,
-				progress: card.progress,
-			}));
+const fetchCards = async (): Promise<CardInfo[]> => {
+	const response = await fetch(
+		`${import.meta.env.VITE_VOCAPP_REST_API}${CARDS_API_PATH}`
+	);
 
-			resolve(cards);
-		}, getRandomNumberInRange(500, 3000));
-	});
+	if (!response.ok) {
+		throw new Error(`HTTP error! status: ${response.status}`);
+	}
+
+	const { words } = await response.json();
+
+	return words;
 };
 
 export const useCards = () => {
 	return useQuery({
 		queryKey: ["cards"],
-		queryFn: () => getCards(),
+		queryFn: fetchCards,
 	});
 };

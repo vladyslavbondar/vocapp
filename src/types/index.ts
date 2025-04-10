@@ -5,9 +5,13 @@ export interface VocabularyWord {
 	note?: string;
 }
 
-export interface Card {
+export interface CardInfo {
 	id: number;
 	name: string;
 	dateCreated: string;
 	progress: number;
+}
+
+export interface VocabularyCard extends CardInfo {
+	words: VocabularyWord[];
 }

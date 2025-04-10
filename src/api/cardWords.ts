@@ -1,24 +1,35 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { VocabularyWord } from "../types";
+import { VocabularyCard, VocabularyWord } from "../types";
 import { wordStore } from "./mockData";
 import { getRandomNumberInRange } from "../utils";
 
-export const getCardWordsById = async (
+const VOCABULARY_CARD_API_PATH = "/card";
+
+const fetchVocabularyCard = async (
 	cardId: number
-): Promise<VocabularyWord[]> => {
-	return new Promise((resolve) => {
-		setTimeout(() => {
-			const card = wordStore.find((card) => card.id === cardId);
+): Promise<VocabularyCard[]> => {
+	const response = await fetch(
+		`${
+			import.meta.env.VITE_VOCAPP_REST_API
+		}${VOCABULARY_CARD_API_PATH}/${cardId}`
+	);
 
-			if (!card) throw new Error("Failed to fetch words");
+	if (!response.ok) {
+		throw new Error(`HTTP error! status: ${response.status}`);
+	}
 
-			resolve(card.words);
-		}, getRandomNumberInRange(500, 1000));
+	const vocabularyCard = await response.json();
+
+	return vocabularyCard;
+};
+
+export const useWordsByCardId = (cardId: number) => {
+	return useQuery({
+		queryKey: ["words", cardId], // words.0: [{}, {}, {}]
+		queryFn: () => fetchVocabularyCard(cardId),
+		enabled: !!cardId, // Prevents execution if cardId is undefined/null
 	});
-	// const res = await fetch("/words");
-	// if (!res.ok) throw new Error("Failed to fetch words");
-	// return res.json();
 };
 
 export const updateWordById = async (
@@ -47,14 +58,6 @@ export const updateWordById = async (
 			// For now, we'll just simulate success
 			resolve(word);
 		}, getRandomNumberInRange(500, 1000));
-	});
-};
-
-export const useWordsByCardId = (cardId: number) => {
-	return useQuery({
-		queryKey: ["words", cardId], // words.0: [{}, {}, {}]
-		queryFn: () => getCardWordsById(cardId),
-		// enabled: !!cardId, // Prevents execution if cardId is undefined/null
 	});
 };
 

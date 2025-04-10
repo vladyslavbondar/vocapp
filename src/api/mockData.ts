@@ -1,10 +1,6 @@
-import { VocabularyWord, Card } from "../types";
+import { VocabularyCard } from "../types";
 
-interface WordCollection extends Card {
-	words: VocabularyWord[];
-}
-
-export const wordStore: WordCollection[] = [
+export const wordStore: VocabularyCard[] = [
 	{
 		id: 0,
 		name: "Basic essentials",
