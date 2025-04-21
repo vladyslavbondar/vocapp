@@ -6,11 +6,6 @@ export function Navbar() {
 			<NavLink to="/">
 				<h1 className="text-blue-700 text-xl font-bold">Vocapp</h1>
 			</NavLink>
-			<div>
-				<NavLink to="/cards" className="text-blue-700">
-					Cards
-				</NavLink>
-			</div>
 		</nav>
 	);
 }

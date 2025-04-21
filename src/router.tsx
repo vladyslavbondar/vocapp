@@ -1,6 +1,12 @@
 import { createBrowserRouter, RouteObject } from "react-router-dom";
 import { AppLayout } from "./components";
-import { Cards, CardDetails, LearnCard, CardDictation } from "./features";
+import {
+	Cards,
+	VocabularyCard,
+	LearnCard,
+	CardDictation,
+	CreateCard,
+} from "./features";
 
 const routes: RouteObject[] = [
 	{
@@ -8,12 +14,16 @@ const routes: RouteObject[] = [
 		element: <AppLayout />,
 		children: [
 			{
-				path: "/cards",
+				path: "/",
 				element: <Cards />,
 			},
 			{
-				path: "/card-details/:cardId",
-				element: <CardDetails />,
+				path: "/create-create",
+				element: <CreateCard />,
+			},
+			{
+				path: "/vocabulary-card/:cardId",
+				element: <VocabularyCard />,
 			},
 			{
 				path: "/learn-card/:cardId",

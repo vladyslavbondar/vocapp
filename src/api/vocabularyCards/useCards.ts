@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
-import { CardInfo } from "../types";
 
-const CARDS_API_PATH = "/cards";
+import { CardInfo } from "../../types";
+import { CARDS_API_PATH } from "./utils";
 
 const fetchCards = async (): Promise<CardInfo[]> => {
 	const response = await fetch(
@@ -12,9 +12,9 @@ const fetchCards = async (): Promise<CardInfo[]> => {
 		throw new Error(`HTTP error! status: ${response.status}`);
 	}
 
-	const { words } = await response.json();
+	const cards = await response.json();
 
-	return words;
+	return cards;
 };
 
 export const useCards = () => {

@@ -1,13 +1,8 @@
 import { useNavigate } from "react-router-dom";
 
-interface CardProps {
-	id: number;
-	name: string;
-	dateCreated: string;
-	progress: number;
-}
+import { CardInfo } from "../../../types";
 
-export function Card({ id, name, dateCreated, progress }: CardProps) {
+export function Card({ id, title, dateCreated, progress }: CardInfo) {
 	const navigate = useNavigate();
 
 	return (
@@ -15,10 +10,10 @@ export function Card({ id, name, dateCreated, progress }: CardProps) {
 			className="card bg-base-100 shadow-sm hover:bg-gray-100 cursor-pointer border-1 border-gray-200"
 			onClick={(event) => {
 				event.preventDefault();
-				navigate(`/card-details/${id}`);
+				navigate(`/vocabulary-card/${id}`);
 			}}>
 			<div className="card-body">
-				<h2 className="card-title">{name}</h2>
+				<h2 className="card-title">{title}</h2>
 				<p className="text-gray-400">{dateCreated}</p>
 				<div>
 					<p className="text-gray-400 text-center">{progress}%</p>

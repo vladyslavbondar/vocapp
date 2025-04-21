@@ -20,6 +20,9 @@ export function InlineEditInput({
 }: InlineEditInputProps) {
 	const [isEditMode, setIsEditMode] = useState(initalEditMode);
 	const [hasTouch, setHasTouch] = useState(!initalEditMode);
+	const [viewInputValue, setViewInputValue] = useState(
+		props.value || props.defaultValue
+	);
 
 	// for server side validation error
 	useEffect(() => {
@@ -35,6 +38,8 @@ export function InlineEditInput({
 			focusOnLoad
 			{...props}
 			onBlur={(event) => {
+				setViewInputValue(event.target.value);
+
 				if (hasTouch) {
 					setIsEditMode(false);
 				}
@@ -48,6 +53,7 @@ export function InlineEditInput({
 		<ViewInput
 			label={label}
 			required={required}
+			value={viewInputValue}
 			{...props}
 			onClick={() => setIsEditMode(true)}
 		/>

@@ -1,8 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useState, useRef } from "react";
 
-import { useCreateWordById } from "../../../api/cardWords";
-import { VocabularyWord } from "../../../types";
+import { useCreateWord } from "../../../api";
 import { wordCardFieldDefenitions, VocabularyWordProp } from "../utils";
 import { EditInput } from "../../../components";
 
@@ -21,7 +20,7 @@ export function WordCreateForm({
 	>({});
 
 	const params = useParams();
-	const { mutate: createWordById, isPending } = useCreateWordById();
+	const { mutate: createWord, isPending } = useCreateWord();
 
 	async function formAction(formData: FormData) {
 		const submitValidationErrors = wordCardFieldDefenitions.reduce(
@@ -52,9 +51,15 @@ export function WordCreateForm({
 			createWordData[valuePair[0] as VocabularyWordProp] = valuePair[1];
 		}
 
-		createWordById({
-			cardId: Number(params.cardId),
-			word: createWordData as Omit<VocabularyWord, "id">,
+		if (!params.cardId) {
+			throw new Error("cardId is missing");
+		}
+
+		createWord({
+			cardId: params.cardId,
+			originalWord: createWordData.originalWord,
+			translations: createWordData.translations,
+			note: createWordData.createWordData,
 		});
 
 		if (onCreateSuccess) {

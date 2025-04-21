@@ -1,4 +1,4 @@
-export function SkeletonCard() {
+export function VocabularyCardSkeleton() {
 	return (
 		<div className="h-[224px] flex flex-col gap-2 p-4 bg-white rounded-2xl">
 			<div>

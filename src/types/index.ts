@@ -1,13 +1,14 @@
 export interface VocabularyWord {
-	id: number;
+	id: string;
 	originalWord: string;
 	translations: string;
 	note?: string;
+	dateCreated: string;
 }
 
 export interface CardInfo {
-	id: number;
-	name: string;
+	id: string;
+	title: string;
 	dateCreated: string;
 	progress: number;
 }

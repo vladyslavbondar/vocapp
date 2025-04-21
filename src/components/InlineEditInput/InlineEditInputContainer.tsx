@@ -15,16 +15,18 @@ export function InlineEditInputContainer({
 }: PropsWithChildren<InlineEditInputContainerProps>) {
 	return (
 		<div className="flex flex-col">
-			<p
-				className={clsx(
-					error ? "text-red-700" : "text-gray-400",
-					"text-xs px-3 pb-0.5"
-				)}>
-				{label}
-				{required && "*"}
-			</p>
+			{label ? (
+				<p
+					className={clsx(
+						error ? "text-red-700" : "text-gray-400",
+						"text-xs px-3 pb-0.5"
+					)}>
+					{label}
+					{required && "*"}
+				</p>
+			) : null}
 			{children}
-			{error ? <p className="text-red-700 mt-0.5 text-xs">{error}</p> : null}
+			{error ? <p className="text-red-700 text-xs mt-0.5">{error}</p> : null}
 		</div>
 	);
 }

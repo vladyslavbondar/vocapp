@@ -6,7 +6,7 @@ import { shufleArray } from "../../utils";
 import { useVocabularyState } from "../../hooks";
 import { DictationWordCard } from "./DictationWordCard";
 import { DictaionResult } from "./DictaionResult";
-import { useWordsByCardId } from "../../api/cardWords";
+import { useGetCardById } from "../../api";
 
 export interface DictationVocabularyWord extends VocabularyWord {
 	userAnswer: null | string;
@@ -14,16 +14,21 @@ export interface DictationVocabularyWord extends VocabularyWord {
 
 export function CardDictation() {
 	const { cardId } = useParams();
-	const { data: wordsList, isLoading } = useWordsByCardId(Number(cardId));
+	const { data, isLoading } = useGetCardById(cardId);
 
-	const { currentWord, updateAndNext, haveAllUpdated, words, updateWords } =
-		useVocabularyState<DictationVocabularyWord>([]);
+	const {
+		currentWord,
+		updateAndNext,
+		haveAllUpdated,
+		words,
+		resetVocabualryState,
+	} = useVocabularyState<DictationVocabularyWord>([]);
 
 	useEffect(() => {
-		if (wordsList) {
-			updateWords(converWordListToDictationVocabulary(wordsList));
+		if (data) {
+			resetVocabualryState(converWordListToDictationVocabulary(data.words));
 		}
-	}, [wordsList, updateWords]);
+	}, [data, resetVocabualryState]);
 
 	if (isLoading || !currentWord) return <>Loading...</>;
 

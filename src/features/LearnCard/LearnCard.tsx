@@ -6,7 +6,7 @@ import { shufleArray } from "../../utils";
 import { LearningWordCard } from "./LearningWordCard";
 import { LearnCardResult } from "./LearnCardResult";
 import { useVocabularyState } from "../../hooks";
-import { useWordsByCardId } from "../../api/cardWords";
+import { useGetCardById } from "../../api";
 
 export interface LearnVocabularyWord extends VocabularyWord {
 	userAnswers: string[];
@@ -14,7 +14,7 @@ export interface LearnVocabularyWord extends VocabularyWord {
 
 export function LearnCard() {
 	const { cardId } = useParams();
-	const { data: wordsList, isLoading } = useWordsByCardId(Number(cardId));
+	const { data, isLoading } = useGetCardById(cardId);
 
 	const {
 		currentWord,
@@ -22,14 +22,14 @@ export function LearnCard() {
 		next,
 		updateAndNext,
 		haveAllUpdated,
-		updateWords,
+		resetVocabualryState,
 	} = useVocabularyState<LearnVocabularyWord>([]);
 
 	useEffect(() => {
-		if (wordsList) {
-			updateWords(converWordListToLearnVocabularyWord(wordsList));
+		if (data) {
+			resetVocabualryState(converWordListToLearnVocabularyWord(data.words));
 		}
-	}, [wordsList, updateWords]);
+	}, [data, resetVocabualryState]);
 
 	if (isLoading || !currentWord) return <>Loading...</>;
 

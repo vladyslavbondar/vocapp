@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useRef } from "react";
 
-import { useUpdateWordById } from "../../../api/cardWords";
+import { useDeleteWord, useUpdateWord } from "../../../api";
 import { VocabularyWord } from "../../../types";
 import { InlineEditInput } from "../../../components/InlineEditInput/InlineEditInput";
 import { wordCardFieldDefenitions, VocabularyWordProp } from "../utils";
@@ -12,12 +12,13 @@ interface WordInlineEditProps {
 
 export function WordUpdateForm({ wordData }: WordInlineEditProps) {
 	const params = useParams();
-	const { mutate: updateWordById, isPending } = useUpdateWordById();
+	const { mutate: updateWord, isPending } = useUpdateWord();
+	const { mutate: deleteWord, isPending: deleteLoading } = useDeleteWord();
 
 	const formRef = useRef<HTMLFormElement>(null);
 
 	async function actionHandler(formData: FormData) {
-		const updatedWordData: Partial<VocabularyWord> = {};
+		let updatedWordData: Partial<VocabularyWord> = {};
 		let shouldUpdate = false;
 
 		const updatedFormValues = formData.entries();
@@ -32,9 +33,15 @@ export function WordUpdateForm({ wordData }: WordInlineEditProps) {
 
 		if (!shouldUpdate) return;
 
-		updateWordById({
-			cardId: Number(params.cardId),
-			word: { ...(wordData || {}), ...updatedWordData },
+		const updatedWord = { ...(wordData || {}), ...updatedWordData };
+
+		if (!params.cardId) {
+			throw new Error("params.cardId is not defined");
+		}
+
+		updateWord({
+			cardId: params.cardId,
+			...updatedWord,
 		});
 	}
 
@@ -50,12 +57,24 @@ export function WordUpdateForm({ wordData }: WordInlineEditProps) {
 			ref={formRef}
 			className="w-full rounded-2xl flex flex-col gap-2 card bg-base-100 shadow-sm border-1 border-gray-100 p-4">
 			<div className="absolute right-2 top-2 flex justify-end">
-				<button type="button" className="btn btn-soft btn-error btn-xs">
+				<button
+					type="button"
+					className="btn btn-soft btn-error btn-xs"
+					onClick={() => {
+						if (!params.cardId) {
+							throw new Error("params cardID");
+						}
+
+						deleteWord({
+							cardId: params.cardId,
+							wordId: wordData.id,
+						});
+					}}>
 					Remove
 				</button>
 			</div>
 			<div className="absolute bottom-3 right-3">
-				{isPending ? (
+				{isPending || deleteLoading ? (
 					<span className="loading loading-spinner text-info"></span>
 				) : null}
 			</div>

@@ -60,7 +60,7 @@ export function EditInput({
 		if (inputRef && focusOnLoad) {
 			inputRef.current?.focus();
 		}
-	}, [focusOnLoad]);
+	}, [inputRef, focusOnLoad]);
 
 	return (
 		<InlineEditInputContainer
